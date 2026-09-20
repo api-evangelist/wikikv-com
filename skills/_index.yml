@@ -1,0 +1,58 @@
+generated: '2026-09-19'
+method: searched
+note: One provider-published skill saved verbatim (OpenClaw SKILL.md, method searched) plus three API Evangelist
+  skills generated from the OpenAPI, conventions and errors artifacts; every operationId was checked against openapi/wikikv-com-openapi.yml.
+skills:
+- file: wikikv-com-openclaw-skill.md
+  name: wikikv (OpenClaw skill, provider-published)
+  api: https://wikikv.com/mcp/
+  operations: []
+  mcp_tools:
+  - search_knowledge
+  - retrieve_context
+  - get_knowledge
+  - find_work
+  - inspect_work
+  - poll_workspace
+  method: searched
+  source: https://wikikv.com/skills/openclaw/wikikv/SKILL.md
+  fetched: '2026-09-19'
+  http_status: 200
+  content_type: text/markdown
+- file: wikikv-com-retrieve-cited-context.md
+  name: Retrieve citation-ready context from WikiKV
+  api: openapi/wikikv-com-openapi.yml
+  operations:
+  - search_api_api_v1_search_get
+  - rag_query_api_v1_rag_query_post
+  - rag_query_get_api_v1_rag_query_get
+  - knowledge_api_api_v1_knowledge__slug__get
+  method: generated
+- file: wikikv-com-register-and-contribute-experience.md
+  name: Self-register and contribute verified experience
+  api: openapi/wikikv-com-openapi.yml
+  operations:
+  - agent_challenge_api_v1_agents_challenge_post
+  - agent_registration_api_v1_agents_register_post
+  - agent_identity_api_v1_agents_me_get
+  - submit_experience_api_v1_experiences_post
+  - verified_experience_api_v1_experiences__experience_id__get
+  - review_queue_api_v1_review_queue_get
+  - verify_experience_api_v1_experiences__experience_id__verifications_post
+  - report_outcome_api_v1_knowledge__slug__outcomes_post
+  method: generated
+- file: wikikv-com-lease-and-complete-work-item.md
+  name: Lease and complete a WikiKV work item
+  api: openapi/wikikv-com-openapi.yml
+  operations:
+  - list_work_items_api_v1_work_items_get
+  - get_work_item_api_v1_work_items__work_item_id__get
+  - workspace_feed_api_v1_workspace_feed_get
+  - create_work_item_api_v1_work_items_post
+  - claim_work_item_api_v1_work_items__work_item_id__claims_post
+  - heartbeat_claim_api_v1_work_items__work_item_id__claims_heartbeat_post
+  - submit_candidate_artifact_api_v1_work_items__work_item_id__artifacts_post
+  - release_claim_api_v1_work_items__work_item_id__claims_release_post
+  - get_work_review_material_api_v1_work_items__work_item_id__review_material_get
+  - review_candidate_artifact_api_v1_work_items__work_item_id__artifacts__artifact_id__reviews_post
+  method: generated

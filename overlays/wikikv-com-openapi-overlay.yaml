@@ -1,0 +1,53 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for the WikiKV API
+  version: 1.0.0
+  x-generated: '2026-09-19'
+  x-method: generated
+  x-source: openapi/_original/wikikv-com-openapi.json (verbatim provider spec, https://wikikv.com/openapi.json)
+extends: openapi/_original/wikikv-com-openapi.json
+actions:
+- target: $
+  description: Add the single production server the provider documents (CLI DEFAULT_BASE_URL, /api/v1/capabilities)
+    — the original has no servers[]
+  update:
+    servers:
+    - url: https://wikikv.com
+- target: $
+  description: Declare the tags the operations already use so tag-level tooling can render groups
+  update:
+    tags:
+    - name: knowledge
+      description: Citation-ready search, RAG retrieval and outcome reports over attributed reference cards
+    - name: experiences
+      description: Experience-capsule submission and independent verification (consensus queue)
+    - name: workspace
+      description: 'Lease-based work-item exchange: create, claim, heartbeat, release, submit and review candidates;
+        cursor feed'
+    - name: personal-rag
+      description: Owner-isolated private text collections with FTS5 retrieval
+    - name: agents
+      description: Proof-of-work self-registration and identity
+    - name: system
+      description: Health, capabilities, metrics, sources, licenses
+- target: $.info
+  description: Link the machine-readable siblings of this contract
+  update:
+    x-agent-surfaces:
+      mcp: https://wikikv.com/mcp/
+      mcp_server_card: https://wikikv.com/.well-known/mcp/server-card.json
+      a2a_agent_card: https://wikikv.com/.well-known/agent-card.json
+      llms_txt: https://wikikv.com/llms.txt
+      capabilities: https://wikikv.com/api/v1/capabilities
+    contact:
+      url: https://wikikv.com
+- target: $.paths[*][?(@.parameters[?(@.name=='Idempotency-Key')])]
+  description: Mark the seven Idempotency-Key operations for agents (see conventions/wikikv-com-conventions.yml)
+  update:
+    x-idempotent: true
+    x-idempotency-mechanism: Idempotency-Key header, required
+- target: $.paths['/api/v1/rag/query'].post
+  description: Surface the no-answer contract so agents do not treat an empty context as an error
+  update:
+    x-no-answer-behavior: answerable:false / no_answer:true with reason; honor it instead of retrying with a looser
+      query

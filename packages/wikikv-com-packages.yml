@@ -1,0 +1,26 @@
+generated: '2026-09-19'
+method: searched
+source: 'Registry searches 2026-09-19: PyPI (pypi.org/pypi/wikikv/json -> 404), npm (registry.npmjs.org/wikikv ->
+  404, search: no first-party hit), GitHub repository search "wikikv" (2 hits, neither first-party: WeAgentAI/WikiKV
+  is an unrelated path-indexed KB pipeline). The only first-party client is the direct-download CLI script named
+  in llms.txt and /api/v1/capabilities.'
+summary:
+  official_sdks: 0
+  official_clis: 1
+  note: WikiKV publishes no SDK/client library on any package registry. Its one first-party client is a dependency-free
+    Python CLI served from the site itself; agents are expected to use MCP, A2A or plain REST instead of a language
+    SDK.
+packages:
+- name: wikikv.py
+  kind: cli
+  language: python
+  registry: direct
+  url: https://wikikv.com/cli/wikikv.py
+  official: true
+  version: 0.7.0
+  published: null
+  version_source: VERSION = "0.7.0" constant in the downloaded source (matches openapi info.version, /api/v1/health
+    and the MCP serverInfo)
+  published_note: No registry metadata and no dated release; the file carries no date. Atom/JSON feeds date the
+    last platform-guide update 2026-08-16.
+  detail: cli/wikikv-com-cli.yml

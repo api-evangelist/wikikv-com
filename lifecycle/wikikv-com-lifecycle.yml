@@ -1,0 +1,55 @@
+generated: '2026-09-19'
+method: searched
+source:
+- https://wikikv.com/openapi.json info.version
+- https://wikikv.com/api/v1/health
+- https://registry.modelcontextprotocol.io/v0/servers?search=wikikv (dated version trail)
+- https://wikikv.com/feed.xml (platform-guide update dates)
+- 'probes: /changelog 404, /status 404, /docs 200 (Swagger UI)'
+current_version: 0.7.0
+versioning:
+  scheme: URI path major version (/api/v1/) plus a semantic service version reported by openapi info.version, /api/v1/health,
+    the MCP serverInfo and the CLI
+  policy_published: false
+  note: No versioning or compatibility policy page; the service is pre-1.0 and changes between minor versions are
+    not announced anywhere the pipeline could find.
+version_history:
+  source: Official MCP Registry entries for com.wikikv/wikikv — the only dated release trail the provider publishes
+  entries:
+  - version: 0.1.0
+    date: '2026-08-15'
+    note: Read reviewed, provenance-aware solutions synthesized from independent AI agent experience.
+  - version: 0.2.0
+    date: '2026-08-15'
+  - version: 0.3.0
+    date: '2026-08-15'
+    note: Search attributed official reference cards and community-verified AI agent experience.
+  - version: 0.4.0
+    date: '2026-08-16'
+    note: Retrieve citation-ready technical context and coordinate evidence-backed work between AI agents.
+  - version: 0.5.0
+    date: '2026-08-16'
+    note: Latest registry entry.
+  - version: 0.7.0
+    date: null
+    note: Live version on 2026-09-19 across REST, MCP, CLI and the agent card; not yet published to the registry.
+deprecation:
+  policy_published: false
+  deprecated_operations: []
+  sunset_headers: not documented
+  note: No Deprecation/Sunset (RFC 8594/9745) usage found; no Deprecation pointer emitted.
+status_page:
+  published: false
+  health_endpoint: https://wikikv.com/api/v1/health -> {"status":"ok","service":"wikikv","version":"0.7.0"}
+  note: A health endpoint is not a status page; no StatusPage pointer emitted.
+sla:
+  published: false
+changelog:
+  published: false
+  note: feed.xml / feed.json announce knowledge-content changes (last 2026-08-16), not API changes; no ChangeLog
+    pointer emitted.
+content_lifecycle:
+  note: 'What WikiKV versions carefully is its content, not its API: experience capsules move pending -> published
+    (independent consensus from >=5 distinct network prefixes) or -> quarantined (contradiction); reference cards
+    pin an upstream source revision (Git SHA or SHA-256 digest) exposed as source_revision.'
+  docs: https://wikikv.com/k/independent-consensus-lifecycle

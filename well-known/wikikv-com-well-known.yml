@@ -1,0 +1,152 @@
+generated: '2026-09-19'
+method: probed
+source: Live GET of every closed-list /.well-known/ path (plus /apis.json, /apis.yml, the A2A card paths and the
+  MCP server-card path) on wikikv.com and www.wikikv.com, 2026-09-19, browser User-Agent, with a random negative-control
+  path per host.
+summary:
+  hosts_probed: 2
+  documents_served: 2
+  served:
+  - /.well-known/agent-card.json (A2A agent card, application/json, 1,138 bytes)
+  - /.well-known/mcp/server-card.json (MCP server card, application/json, 18,252 bytes)
+  absent:
+  - security.txt
+  - openid-configuration
+  - oauth-authorization-server
+  - oauth-protected-resource
+  - api-catalog
+  - ai-plugin.json
+  - ucp.json
+  - acp.json
+  - aauth-resource.json
+  - apis.json (well-known and root)
+  - apis.yml
+  note: Misses are genuine JSON 404s ({"detail":"Not Found"}, 22 bytes) from the FastAPI app, not an SPA catch-all;
+    the negative control 404d on both hosts. The MCP server runs on the same host (https://wikikv.com/mcp/), so
+    there is no separate MCP host to probe; it publishes no RFC 9728 protected-resource metadata and no OAuth authorization-server
+    metadata — write access uses a self-issued Bearer API key, not OAuth.
+hosts:
+- host: https://wikikv.com
+  role: registrable domain, API base, docs host and MCP server host (one host serves all surfaces)
+  path_echo_control:
+    path: /.well-known/wikikv-com-negative-control-640e7d78.json
+    status: 404
+    result: passed
+  hit_count: 2
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/api-catalog.json
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/ucp.json
+    status: 404
+  - path: /.well-known/acp.json
+    status: 404
+  - path: /.well-known/aauth-resource.json
+    status: 404
+  - path: /.well-known/apis.json
+    status: 404
+  - path: /apis.json
+    status: 404
+  - path: /apis.yml
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 200
+    file: wikikv-com-agent-card.json
+    content_type: application/json
+    real_document: true
+  - path: /.well-known/agent.json
+    status: 404
+  - path: /.well-known/mcp/server-card.json
+    status: 200
+    file: wikikv-com-mcp-server-card.json
+    content_type: application/json
+    real_document: true
+  - path: /.well-known/mcp.json
+    status: 404
+- host: https://www.wikikv.com
+  role: www alias
+  path_echo_control:
+    path: /.well-known/wikikv-com-negative-control-640e7d78.json
+    status: 301
+    result: passed
+  hit_count: 0
+  documents:
+  - path: /.well-known/security.txt
+    status: 301
+    redirect: https://wikikv.com/.well-known/security.txt
+    note: www host 301s every path to the apex host; probed there
+  - path: /.well-known/openid-configuration
+    status: 301
+    redirect: https://wikikv.com/.well-known/openid-configuration
+    note: www host 301s every path to the apex host; probed there
+  - path: /.well-known/oauth-authorization-server
+    status: 301
+    redirect: https://wikikv.com/.well-known/oauth-authorization-server
+    note: www host 301s every path to the apex host; probed there
+  - path: /.well-known/oauth-protected-resource
+    status: 301
+    redirect: https://wikikv.com/.well-known/oauth-protected-resource
+    note: www host 301s every path to the apex host; probed there
+  - path: /.well-known/api-catalog
+    status: 301
+    redirect: https://wikikv.com/.well-known/api-catalog
+    note: www host 301s every path to the apex host; probed there
+  - path: /.well-known/api-catalog.json
+    status: 301
+    redirect: https://wikikv.com/.well-known/api-catalog.json
+    note: www host 301s every path to the apex host; probed there
+  - path: /.well-known/ai-plugin.json
+    status: 301
+    redirect: https://wikikv.com/.well-known/ai-plugin.json
+    note: www host 301s every path to the apex host; probed there
+  - path: /.well-known/ucp.json
+    status: 301
+    redirect: https://wikikv.com/.well-known/ucp.json
+    note: www host 301s every path to the apex host; probed there
+  - path: /.well-known/acp.json
+    status: 301
+    redirect: https://wikikv.com/.well-known/acp.json
+    note: www host 301s every path to the apex host; probed there
+  - path: /.well-known/aauth-resource.json
+    status: 301
+    redirect: https://wikikv.com/.well-known/aauth-resource.json
+    note: www host 301s every path to the apex host; probed there
+  - path: /.well-known/apis.json
+    status: 301
+    redirect: https://wikikv.com/.well-known/apis.json
+    note: www host 301s every path to the apex host; probed there
+  - path: /apis.json
+    status: 301
+    redirect: https://wikikv.com/apis.json
+    note: www host 301s every path to the apex host; probed there
+  - path: /apis.yml
+    status: 301
+    redirect: https://wikikv.com/apis.yml
+    note: www host 301s every path to the apex host; probed there
+  - path: /.well-known/agent-card.json
+    status: 301
+    redirect: https://wikikv.com/.well-known/agent-card.json
+    note: www host 301s every path to the apex host; probed there
+  - path: /.well-known/agent.json
+    status: 301
+    redirect: https://wikikv.com/.well-known/agent.json
+    note: www host 301s every path to the apex host; probed there
+  - path: /.well-known/mcp/server-card.json
+    status: 301
+    redirect: https://wikikv.com/.well-known/mcp/server-card.json
+    note: www host 301s every path to the apex host; probed there
+  - path: /.well-known/mcp.json
+    status: 301
+    redirect: https://wikikv.com/.well-known/mcp.json
+    note: www host 301s every path to the apex host; probed there

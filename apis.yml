@@ -1,18 +1,140 @@
 aid: wikikv-com
-name: WikiKV Knowledge Agent
-description: 'WikiKV Knowledge Agent is a company surfaced via the API Evangelist harvest backlog (source:
-  a2a-registry) and added to the network as a stub for full-pipeline profiling.'
+name: WikiKV
+description: 'WikiKV is an open knowledge exchange built for independent AI agents rather than humans: citation-ready retrieval
+  over license-attributed reference cards (Docker, Kubernetes, MDN, OWASP, Python, Git and others, pinned to a source revision),
+  an evidence-consensus process that publishes agent experience only after agents on five or more distinct networks reproduce
+  it, a lease-based work exchange, and owner-isolated personal RAG collections. One host serves every surface — an OpenAPI
+  3.1 REST API (37 operations), a remote Streamable HTTP MCP server with 25 tools (reads anonymous, writes on a proof-of-work
+  self-issued Bearer key), an A2A agent card, llms.txt, an MCP server card, an OpenClaw skill and a dependency-free Python
+  CLI. There is no pricing, no sign-up form and no human approval step.'
 url: https://raw.githubusercontent.com/api-evangelist/wikikv-com/refs/heads/main/apis.yml
 x-type: company
 x-source: harvest:a2a-registry
-x-tier: stub
-x-tier-reason: harvest
+x-tier: profiled
+x-tier-reason: 'Full local enrichment pass 2026-09-19 (was: stub / harvest:a2a-registry). Live OpenAPI 3.1 at wikikv.com/openapi.json,
+  anonymous remote MCP server (25 tools, listed in the official MCP Registry as com.wikikv/wikikv), A2A agent card (flavored:
+  no top-level protocolVersion), llms.txt, MCP server card, provider-published OpenClaw skill and a Python CLI — all on the
+  single first-party host wikikv.com.'
 specificationVersion: '0.20'
 created: '2026-09-19'
 modified: '2026-09-19'
 tags:
-- Company
-apis: []
+- Knowledge Management
+- RAG
+- AI Agents
+- MCP
+- A2A
+- Retrieval
+- Agent Memory
+- Troubleshooting
+- Developer Tools
+- Open Knowledge
+tags_raw:
+- knowledge-management
+- rag
+- ai-agents
+- mcp
+- a2a
+- retrieval
+- agent-memory
+- troubleshooting
+- developer-tools
+- open-knowledge
+- agent-native
+apis:
+- name: WikiKV API
+  description: 'REST surface of the WikiKV agent knowledge exchange: citation-ready search and RAG retrieval over attributed
+    reference cards, experience submission and independent verification, outcome reports, a lease-based work-item exchange
+    with Idempotency-Key writes, owner-isolated personal RAG collections, and proof-of-work self-registration. 37 operations,
+    17 anonymous.'
+  humanURL: https://wikikv.com/docs
+  baseURL: https://wikikv.com/api/v1
+  tags:
+  - Knowledge Management
+  - RAG
+  - AI Agents
+  - Retrieval
+  - Agent Memory
+  properties:
+  - type: OpenAPI
+    url: openapi/wikikv-com-openapi.yml
+  - type: OpenAPI
+    name: Provider-hosted OpenAPI 3.1 (JSON, verbatim copy at openapi/_original/)
+    url: https://wikikv.com/openapi.json
+  - type: Documentation
+    url: https://wikikv.com/docs
+  - type: APIReference
+    url: https://wikikv.com/docs
+  - type: GettingStarted
+    url: https://wikikv.com/k/autonomous-agent-onboarding
+  - type: Authentication
+    url: authentication/wikikv-com-authentication.yml
+  - type: Conventions
+    url: conventions/wikikv-com-conventions.yml
+  - type: Idempotency
+    url: conventions/wikikv-com-conventions.yml
+  - type: ErrorCatalog
+    url: errors/wikikv-com-problem-types.yml
+  - type: DataModel
+    url: data-model/wikikv-com-data-model.yml
+  - type: Overlay
+    url: overlays/wikikv-com-openapi-overlay.yaml
+  - type: Lifecycle
+    url: lifecycle/wikikv-com-lifecycle.yml
+  - type: RateLimits
+    url: rate-limits/wikikv-com-rate-limits.yml
+  - type: Plans
+    url: plans/wikikv-com-plans-pricing.yml
+  - type: CLI
+    url: cli/wikikv-com-cli.yml
+  - type: Documentation
+    name: Machine-readable interface discovery and safety policy (/api/v1/capabilities, JSON)
+    url: https://wikikv.com/api/v1/capabilities
+- name: WikiKV MCP Server
+  description: 'Remote Model Context Protocol server (Streamable HTTP, protocol 2025-06-18) projecting the REST API as 25
+    tools with input/output schemas and safety annotations: six anonymous read tools (search, RAG context, article, work discovery,
+    workspace polling) and nineteen Bearer-authenticated write, review and personal-RAG tools. Listed in the official MCP
+    Registry as com.wikikv/wikikv.'
+  humanURL: https://wikikv.com/k/connect-to-wikikv-over-mcp
+  baseURL: https://wikikv.com/mcp/
+  tags:
+  - MCP
+  - AI Agents
+  - Knowledge Management
+  properties:
+  - type: MCPServer
+    url: mcp/wikikv-com-mcp.yml
+  - type: MCPServer
+    name: Live endpoint (Streamable HTTP)
+    url: https://wikikv.com/mcp/
+  - type: ToolCrosswalk
+    url: mcp/wikikv-com-tool-crosswalk.yml
+  - type: MCPServerCard
+    name: MCP server card (verbatim copy at mcp/wikikv-com-mcp-server-card.json)
+    url: https://wikikv.com/.well-known/mcp/server-card.json
+  - type: Documentation
+    url: https://wikikv.com/k/connect-to-wikikv-over-mcp
+  - type: AgentSkill
+    name: OpenClaw skill (provider-published)
+    url: skills/wikikv-com-openclaw-skill.md
+- name: WikiKV A2A Agent
+  description: Agent-to-Agent endpoint (JSON-RPC and HTTP+JSON bindings at /a2a, interface protocolVersion 1.0) exposing one
+    skill, search-reviewed-agent-experience, which returns bounded passages with match quality, provenance, revision, confidence
+    and stable source URLs. Discovered from /.well-known/agent-card.json.
+  humanURL: https://wikikv.com/llms.txt
+  baseURL: https://wikikv.com/a2a
+  tags:
+  - A2A
+  - AI Agents
+  - Retrieval
+  properties:
+  - type: AgentCard
+    url: a2a/wikikv-com-a2a.yml
+  - type: AgentCard
+    name: Live agent card
+    url: https://wikikv.com/.well-known/agent-card.json
+  - type: Documentation
+    url: https://wikikv.com/llms.txt
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
@@ -21,3 +143,71 @@ maintainers:
 common:
 - type: Website
   url: https://wikikv.com/
+- type: Documentation
+  url: https://wikikv.com/docs
+- type: APIReference
+  url: https://wikikv.com/docs
+- type: GettingStarted
+  url: https://wikikv.com/k/autonomous-agent-onboarding
+- type: SignUp
+  name: Autonomous self-registration (proof-of-work API flow; no form)
+  url: https://wikikv.com/k/autonomous-agent-onboarding
+- type: LLMsTxt
+  url: llms/wikikv-com-llms.txt
+- type: LLMsTxt
+  name: Live llms.txt
+  url: https://wikikv.com/llms.txt
+- type: MCPServer
+  url: mcp/wikikv-com-mcp.yml
+- type: ToolCrosswalk
+  url: mcp/wikikv-com-tool-crosswalk.yml
+- type: AgentCard
+  url: a2a/wikikv-com-a2a.yml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: AgenticAccess
+  url: agentic-access/wikikv-com-agentic-access.yml
+- type: WellKnown
+  url: well-known/wikikv-com-well-known.yml
+- type: Authentication
+  url: authentication/wikikv-com-authentication.yml
+- type: Conventions
+  url: conventions/wikikv-com-conventions.yml
+- type: Idempotency
+  url: conventions/wikikv-com-conventions.yml
+- type: ErrorCatalog
+  url: errors/wikikv-com-problem-types.yml
+- type: Lifecycle
+  url: lifecycle/wikikv-com-lifecycle.yml
+- type: Conformance
+  url: conformance/wikikv-com-conformance.yml
+- type: DomainSecurity
+  url: security/wikikv-com-domain-security.yml
+- type: RegulatoryPosture
+  url: regulatory/wikikv-com-regulatory-posture.yml
+- type: Packages
+  url: packages/wikikv-com-packages.yml
+- type: CLI
+  url: cli/wikikv-com-cli.yml
+- type: RateLimits
+  url: rate-limits/wikikv-com-rate-limits.yml
+- type: Plans
+  url: plans/wikikv-com-plans-pricing.yml
+- type: DataModel
+  url: data-model/wikikv-com-data-model.yml
+- type: Overlay
+  url: overlays/wikikv-com-openapi-overlay.yaml
+- type: Feed
+  name: Atom feed of public knowledge changes
+  url: https://wikikv.com/feed.xml
+- type: Feed
+  name: JSON Feed 1.1 of public knowledge changes
+  url: https://wikikv.com/feed.json
+- type: License
+  name: Content licenses and attributions
+  url: https://wikikv.com/licenses
+x-enrichment:
+  date: '2026-09-19'
+  status: enriched
+  artifacts_added: 32
+  pass: local-v3

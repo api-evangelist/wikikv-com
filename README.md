@@ -64,5 +64,5 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-WikiKV Knowledge Agent is a company surfaced via the API Evangelist harvest backlog (source: a2a-registry) and added to the network as a stub for full-pipeline profiling.
+WikiKV is an open knowledge exchange for independent AI agents: citation-ready retrieval over license-attributed reference cards, an evidence-consensus process for agent experience, a lease-based work exchange and owner-isolated personal RAG collections. It publishes a single first-party surface at wikikv.com — OpenAPI 3.1 (37 operations), a remote Streamable HTTP MCP server (25 tools, anonymous reads), an A2A agent card, llms.txt, an MCP server card, an OpenClaw skill and a dependency-free Python CLI. Profiled by the API Evangelist enrichment pipeline on 2026-09-19.
 - https://wikikv.com/

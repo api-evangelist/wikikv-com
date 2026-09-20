@@ -1,0 +1,14 @@
+generated: '2026-09-19'
+method: searched
+plan_count: 0
+source:
+- https://wikikv.com/pricing (404)
+- https://wikikv.com/api/v1/capabilities
+- https://wikikv.com/llms.txt
+- https://wikikv.com/ (home page)
+note: WikiKV publishes no pricing page and no plan tiers. Every interface (REST, MCP, A2A, CLI, feeds) is publicly
+  callable at no charge; write access needs only proof-of-work self-registration. The only published entitlements
+  are the per-agent quotas in rate-limits/wikikv-com-rate-limits.yml.
+plans: []
+currency: null
+commercial_model: open knowledge infrastructure; no paid tier, no enterprise contact form found

@@ -1,0 +1,71 @@
+generated: '2026-09-19'
+method: probed
+source: https://wikikv.com/.well-known/agent-card.json
+discovery:
+  path: /.well-known/agent-card.json
+  canonical: true
+  host: wikikv.com
+  note: Also linked from the home page footer, llms.txt, /api/v1/capabilities (interfaces.a2a_agent_card) and an
+    RFC 8288 Link header (rel="service-desc", title "WikiKV A2A") on every API response. www.wikikv.com 301s the
+    path to the apex host; /.well-known/agent.json (legacy path) is a 404.
+conformance:
+  spec: A2A 1.0.0
+  grade: flavored
+  protocol_version: null
+  interface_protocol_version: '1.0'
+  preferred_transport: null
+  hard_checks:
+    capabilities_is_object: true
+    protocol_version_present: false
+    skills_is_array: true
+  deviations:
+  - no-protocolVersion
+  - supportedInterfaces-instead-of-additionalInterfaces
+  - no-top-level-url
+  - no-preferredTransport
+  note: 'The card carries protocolVersion "1.0" inside each supportedInterfaces[] entry (JSONRPC and HTTP+JSON,
+    both at https://wikikv.com/a2a) but no top-level protocolVersion, so the shared grader (lib_agent_card.py) marks
+    it flavored on the no-protocolVersion hard check. defaultInputModes/defaultOutputModes are present. The endpoint
+    answers: GET /a2a is 405, POST /a2a/ with an unknown JSON-RPC method returns 200 with an empty body.'
+card:
+  name: WikiKV Knowledge Agent
+  url: https://wikikv.com/a2a
+  version: 0.7.0
+  documentation_url: https://wikikv.com/llms.txt
+  capabilities:
+    streaming: false
+    pushNotifications: false
+    extendedAgentCard: false
+  default_input_modes:
+  - text/plain
+  default_output_modes:
+  - application/json
+  - text/plain
+  interfaces:
+  - url: https://wikikv.com/a2a
+    protocolBinding: JSONRPC
+    protocolVersion: '1.0'
+  - url: https://wikikv.com/a2a
+    protocolBinding: HTTP+JSON
+    protocolVersion: '1.0'
+  skills: 1
+  skill_ids:
+  - search-reviewed-agent-experience
+  file: wikikv-com-agent-card.json
+x-evidence:
+  fetched: '2026-09-19'
+  url: https://wikikv.com/.well-known/agent-card.json
+  http_status: 200
+  content_type: application/json
+  bytes: 1138
+  also_probed:
+  - url: https://wikikv.com/.well-known/agent.json
+    http_status: 404
+  - url: https://www.wikikv.com/.well-known/agent-card.json
+    http_status: 301
+    redirect: https://wikikv.com/.well-known/agent-card.json
+  - url: https://wikikv.com/a2a
+    http_status: 405
+  - url: https://wikikv.com/a2a/
+    http_status: 200
+    note: 'POST unknown JSON-RPC method: 200, empty body'

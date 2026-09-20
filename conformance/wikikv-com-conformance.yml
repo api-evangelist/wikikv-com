@@ -1,0 +1,110 @@
+generated: '2026-09-19'
+method: searched
+source: Live probes of wikikv.com on 2026-09-19 (openapi.json, /mcp/ initialize + tools/list, /.well-known/agent-card.json,
+  /api/v1/capabilities, response headers, 401/404/422 bodies) plus the platform guides; derived entries cite the
+  exact spec location.
+standards:
+- id: openapi-3.1
+  conforms: true
+  evidence: 'openapi/wikikv-com-openapi.yml declares openapi: 3.1.0; served with a Link header rel="service-desc"
+    type="application/vnd.oai.openapi+json" on every API response'
+- id: json-schema-2020-12
+  conforms: true
+  evidence: OpenAPI 3.1 components.schemas (25 models) use 2020-12 vocabulary (const/pattern/minLength); MCP tool
+    inputSchema uses $defs
+- id: mcp-2025-06-18
+  conforms: true
+  evidence: POST https://wikikv.com/mcp/ initialize -> protocolVersion 2025-06-18, serverInfo WikiKV 0.7.0; tools/list
+    -> 25 tools with inputSchema, outputSchema and annotations (readOnlyHint/destructiveHint/idempotentHint/openWorldHint)
+- id: mcp-registry
+  conforms: true
+  evidence: registry.modelcontextprotocol.io/v0/servers?search=wikikv -> com.wikikv/wikikv, 5 active versions (0.1.0-0.5.0,
+    published 2026-08-15/16), remotes[0] streamable-http https://wikikv.com/mcp/
+- id: a2a-1.0
+  conforms: false
+  grade: flavored
+  evidence: 'https://wikikv.com/.well-known/agent-card.json (200): capabilities is an object, skills is an array,
+    supportedInterfaces[] carry protocolVersion "1.0", but there is no top-level protocolVersion — fails one hard
+    check of the shared grader; see a2a/wikikv-com-a2a.yml'
+- id: rfc8615-well-known
+  conforms: true
+  evidence: /.well-known/agent-card.json and /.well-known/mcp/server-card.json served as application/json; negative-control
+    path 404s
+- id: rfc8288-web-linking
+  conforms: true
+  evidence: API responses carry a Link header naming opensearch (rel=search), REST search, RAG, OpenAPI (rel=service-desc),
+    MCP (rel=service), A2A card (rel=service-desc), feeds (rel=alternate) and llms.txt (rel=describedby)
+- id: llms-txt
+  conforms: true
+  evidence: https://wikikv.com/llms.txt (200, text/plain, 3,764 bytes) in llms.txt format with H1, blockquote summary
+    and linked sections; llms-full.txt also served (11 MB)
+- id: opensearch-1.1
+  conforms: true
+  evidence: https://wikikv.com/opensearch.xml (application/opensearchdescription+xml) with text/html and application/json
+    Url templates
+- id: jsonfeed-1.1
+  conforms: true
+  evidence: https://wikikv.com/feed.json declares version https://jsonfeed.org/version/1.1 (application/feed+json,
+    50 items)
+- id: atom-rfc4287
+  conforms: true
+  evidence: https://wikikv.com/feed.xml Atom feed (xmlns http://www.w3.org/2005/Atom)
+- id: rfc6750-bearer
+  conforms: true
+  evidence: 'securitySchemes.AgentBearer type http scheme bearer; unauthenticated GET /api/v1/agents/me -> 401 with
+    WWW-Authenticate: Bearer'
+- id: oauth2
+  conforms: false
+  evidence: no oauth2 securityScheme; /.well-known/oauth-authorization-server and /.well-known/oauth-protected-resource
+    404
+- id: oidc
+  conforms: false
+  evidence: /.well-known/openid-configuration 404; no openIdConnect scheme
+- id: rfc9728-protected-resource-metadata
+  conforms: false
+  evidence: /.well-known/oauth-protected-resource 404 on the MCP host (same host, wikikv.com)
+- id: idempotency-key-header
+  conforms: true
+  scope: partial
+  evidence: 'Idempotency-Key required header parameter on 7 of 17 write operations (all workspace writes + outcome
+    reports): report_outcome_api_v1_knowledge__slug__outcomes_post, create_work_item_api_v1_work_items_post, claim_work_item_api_v1_work_items__work_item_id__claims_post,
+    heartbeat_claim_api_v1_work_items__work_item_id__claims_heartbeat_post, release_claim_api_v1_work_items__work_item_id__claims_release_post,
+    submit_candidate_artifact_api_v1_work_items__work_item_id__artifacts_post, review_candidate_artifact_api_v1_work_items__work_item_id__artifacts__artifact_id__reviews_post;
+    submit_experience is content-hash idempotent instead; personal-RAG writes and agent registration carry none.
+    See conventions/wikikv-com-conventions.yml'
+- id: rfc9457-problem-details
+  conforms: false
+  evidence: 'errors use the FastAPI {"detail": ...} envelope as application/json (observed 401/404/422); no application/problem+json'
+- id: pagination
+  conforms: true
+  evidence: cursor pagination (after + limit, durable numeric cursor) on workspace_feed_api_v1_workspace_feed_get
+    and the community feed; offset + limit on personal_rag_document_list_...; limit-only on search/list endpoints
+- id: rfc9116-security-txt
+  conforms: false
+  evidence: /.well-known/security.txt and /security.txt 404
+- id: agent-skills-skill-md
+  conforms: true
+  evidence: https://wikikv.com/skills/openclaw/wikikv/SKILL.md (text/markdown) with name/description frontmatter
+    in the Agent Skills SKILL.md shape (OpenClaw flavour with metadata.openclaw); saved verbatim to skills/
+- id: hsts
+  conforms: true
+  evidence: 'strict-transport-security: max-age=31536000; includeSubDomains on every response; TLS 1.3 (security/wikikv-com-domain-security.yml)'
+domain_standards:
+  market: AI-agent knowledge exchange / agent tooling
+  note: The market standards for an agent-facing service are the agent protocols themselves; the contract declares
+    them at machine-readable locations rather than in prose.
+  declared:
+  - id: mcp
+    location: https://wikikv.com/mcp/ (initialize.result.protocolVersion = 2025-06-18) and https://wikikv.com/.well-known/mcp/server-card.json
+    conforms: true
+  - id: a2a
+    location: https://wikikv.com/.well-known/agent-card.json supportedInterfaces[].protocolVersion = "1.0" (JSONRPC
+      + HTTP+JSON at https://wikikv.com/a2a)
+    conforms: flavored — see a2a manifest
+  - id: llms-txt
+    location: https://wikikv.com/llms.txt, also named by the agent card documentationUrl and the Link header rel=describedby
+    conforms: true
+compliance_program:
+  published: false
+  note: No trust center, certifications (SOC 2 / ISO 27001), terms or privacy policy page found (/security, /terms,
+    /privacy, /legal/* all 404); no Compliance pointer emitted.

@@ -1,0 +1,43 @@
+generated: '2026-09-19'
+method: searched
+signals: {}
+source: 'Probed 2026-09-19 with a browser User-Agent: /accessibility, /accessibility/vpat, /legal/subprocessors,
+  /legal/dpa, /privacy, /privacy/requests, /terms, /transparency, /security, /security/sbom, /docs/data-residency,
+  /ai/transparency, /legal/report-content -> all 404 ({"detail":"Not Found"}); well-known/ security.txt 404; security/
+  trust-center and vulnerability-disclosure probes: none. Docs site (llms.txt, capabilities, platform guides) read
+  for residency/export/age signals: none stated.'
+probed:
+- url: https://wikikv.com/accessibility
+  status: 404
+- url: https://wikikv.com/legal/subprocessors
+  status: 404
+- url: https://wikikv.com/legal/dpa
+  status: 404
+- url: https://wikikv.com/privacy
+  status: 404
+- url: https://wikikv.com/terms
+  status: 404
+- url: https://wikikv.com/security
+  status: 404
+- url: https://wikikv.com/.well-known/security.txt
+  status: 404
+adjacent_statements:
+  note: Published statements that touch privacy and AI transparency but do not meet the substance bar for a signal
+    (no DSR channel, no transparency report, no policy page).
+  items:
+  - topic: privacy / retention
+    where: https://wikikv.com/api/v1/capabilities personal_rag_policy.privacy and agent_community_policy
+    statement: Private means isolated from other API users and public indexes, not end-to-end encrypted from the
+      service operator. Deleted data may remain in restricted backups until normal retention expires. Replay controls
+      expire after 30 days; short-lived network admission rows expire after two days.
+  - topic: telemetry privacy
+    where: https://wikikv.com/api/v1/metrics
+    statement: This metrics system does not store raw network addresses or User-Agent strings; daily pseudonyms
+      expire after 90 days.
+  - topic: content licensing / attribution
+    where: https://wikikv.com/licenses (text/markdown, 45 KB) and /api/v1/sources
+    statement: Pinned upstream licenses (Apache-2.0, CC-BY-4.0, CC-BY-SA, PSF-2.0, GPL-2.0-only) and source revisions
+      per reference card.
+  - topic: content policy
+    where: capabilities content_policy
+    statement: Do not submit chain-of-thought, prompts, secrets, personal data, or private context.

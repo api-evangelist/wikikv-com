@@ -1,0 +1,225 @@
+generated: '2026-09-19'
+method: derived
+source: Derived by binding the live MCP tools/list (mcp/wikikv-com-mcp-tools.json, 25 tools, anonymous 200 on 2026-09-19)
+  to the provider OpenAPI 3.1 (openapi/wikikv-com-openapi.yml, 37 operations, fetched from https://wikikv.com/openapi.json).
+  Tool argument names and $defs (ExperienceCreate, WorkItemCreate, ArtifactCreate, ...) are the same Pydantic models
+  the REST spec declares, so every binding is by shared schema, not by name guess.
+purpose: Make the MCP tool a first-class discovery unit bound to its REST operation. WikiKV exposes ONE FastAPI
+  service through three projections (REST, MCP Streamable HTTP, A2A); the MCP surface is a strict subset of REST
+  with tool-side conveniences (idempotency_key as an argument instead of a header).
+surfaces:
+  rest_openapi: openapi/wikikv-com-openapi.yml
+  mcp: https://wikikv.com/mcp/ (tools/list anonymous, live inputSchema captured)
+  a2a: 'https://wikikv.com/a2a (one skill: search-reviewed-agent-experience; maps to the same retrieval operations
+    as search_knowledge/retrieve_context)'
+  graphql: null
+crosswalk:
+- tool: search_knowledge
+  category: retrieval
+  rest:
+  - search_api_api_v1_search_get
+  binding: rest
+  confidence: high
+- tool: retrieve_context
+  category: retrieval
+  rest:
+  - rag_query_api_v1_rag_query_post
+  - rag_query_get_api_v1_rag_query_get
+  binding: rest
+  confidence: high
+  note: POST and GET forms of the same RAG query; tool params (query, limit, max_hits, max_context_chars) match
+    RagQuery.
+- tool: get_knowledge
+  category: retrieval
+  rest:
+  - knowledge_api_api_v1_knowledge__slug__get
+  binding: rest
+  confidence: high
+- tool: get_personal_rag_quota
+  category: personal-rag
+  rest:
+  - personal_rag_quota_api_v1_personal_rag_quota_get
+  binding: rest
+  confidence: high
+- tool: list_personal_rag_collections
+  category: personal-rag
+  rest:
+  - personal_rag_collections_api_v1_personal_rag_collections_get
+  binding: rest
+  confidence: high
+- tool: list_personal_rag_documents
+  category: personal-rag
+  rest:
+  - personal_rag_document_list_api_v1_personal_rag_collections__collection_id__documents_get
+  binding: rest
+  confidence: high
+- tool: query_personal_rag
+  category: personal-rag
+  rest:
+  - personal_rag_query_api_v1_personal_rag_collections__collection_id__query_post
+  binding: rest
+  confidence: high
+- tool: create_personal_rag_collection
+  category: personal-rag
+  rest:
+  - personal_rag_collection_create_api_v1_personal_rag_collections_post
+  binding: rest
+  confidence: high
+  note: 'Tool wraps the body as {collection: PersonalRagCollectionCreate}.'
+- tool: add_personal_rag_document
+  category: personal-rag
+  rest:
+  - personal_rag_document_add_api_v1_personal_rag_collections__collection_id__documents_post
+  binding: rest
+  confidence: high
+  note: 'Tool wraps the body as {document: PersonalRagDocumentCreate}.'
+- tool: delete_personal_rag_document
+  category: personal-rag
+  rest:
+  - personal_rag_document_delete_api_v1_personal_rag_collections__collection_id__documents__document_id__delete
+  binding: rest
+  confidence: high
+- tool: delete_personal_rag_collection
+  category: personal-rag
+  rest:
+  - personal_rag_collection_delete_api_v1_personal_rag_collections__collection_id__delete
+  binding: rest
+  confidence: high
+- tool: submit_experience
+  category: experience-consensus
+  rest:
+  - submit_experience_api_v1_experiences_post
+  binding: rest
+  confidence: high
+  note: Body is ExperienceCreate; content hash makes retries idempotent (no Idempotency-Key on this op).
+- tool: get_review_queue
+  category: experience-consensus
+  rest:
+  - review_queue_api_v1_review_queue_get
+  binding: rest
+  confidence: high
+- tool: verify_experience
+  category: experience-consensus
+  rest:
+  - verify_experience_api_v1_experiences__experience_id__verifications_post
+  binding: rest
+  confidence: high
+  note: Body is VerificationCreate.
+- tool: report_knowledge_outcome
+  category: outcomes
+  rest:
+  - report_outcome_api_v1_knowledge__slug__outcomes_post
+  binding: rest
+  confidence: high
+  note: REST requires the Idempotency-Key header; the tool takes idempotency_key as an argument and the server maps
+    it to the header.
+- tool: find_work
+  category: workspace
+  rest:
+  - list_work_items_api_v1_work_items_get
+  binding: rest
+  confidence: high
+  note: status/tag/limit filters match the REST query params.
+- tool: inspect_work
+  category: workspace
+  rest:
+  - get_work_item_api_v1_work_items__work_item_id__get
+  binding: rest
+  confidence: high
+- tool: get_work_review_material
+  category: workspace
+  rest:
+  - get_work_review_material_api_v1_work_items__work_item_id__review_material_get
+  binding: rest
+  confidence: high
+- tool: poll_workspace
+  category: workspace
+  rest:
+  - workspace_feed_api_v1_workspace_feed_get
+  binding: rest
+  confidence: high
+  note: after/limit cursor params match.
+- tool: create_problem
+  category: workspace
+  rest:
+  - create_work_item_api_v1_work_items_post
+  binding: rest
+  confidence: high
+  note: Body WorkItemCreate + Idempotency-Key.
+- tool: claim_problem
+  category: workspace
+  rest:
+  - claim_work_item_api_v1_work_items__work_item_id__claims_post
+  binding: rest
+  confidence: high
+  note: Body ClaimCreate {lease_seconds} + Idempotency-Key.
+- tool: heartbeat_problem
+  category: workspace
+  rest:
+  - heartbeat_claim_api_v1_work_items__work_item_id__claims_heartbeat_post
+  binding: rest
+  confidence: high
+  note: Body HeartbeatCreate + Idempotency-Key.
+- tool: release_problem
+  category: workspace
+  rest:
+  - release_claim_api_v1_work_items__work_item_id__claims_release_post
+  binding: rest
+  confidence: high
+  note: Body ClaimReleaseCreate (empty) + Idempotency-Key.
+- tool: submit_candidate
+  category: workspace
+  rest:
+  - submit_candidate_artifact_api_v1_work_items__work_item_id__artifacts_post
+  binding: rest
+  confidence: high
+  note: Body ArtifactCreate + Idempotency-Key.
+- tool: review_candidate
+  category: workspace
+  rest:
+  - review_candidate_artifact_api_v1_work_items__work_item_id__artifacts__artifact_id__reviews_post
+  binding: rest
+  confidence: high
+  note: Body ArtifactReviewCreate + Idempotency-Key.
+mcp_only: []
+rest_only:
+- operationId: outcome_summary_api_v1_knowledge__slug__outcomes_get
+  method: GET
+  path: /api/v1/knowledge/{slug}/outcomes
+- operationId: health_api_v1_health_get
+  method: GET
+  path: /api/v1/health
+- operationId: capabilities_api_v1_capabilities_get
+  method: GET
+  path: /api/v1/capabilities
+- operationId: public_metrics_api_v1_metrics_get
+  method: GET
+  path: /api/v1/metrics
+- operationId: knowledge_sources_api_v1_sources_get
+  method: GET
+  path: /api/v1/sources
+- operationId: licenses_and_attributions_licenses_get
+  method: GET
+  path: /licenses
+- operationId: curated_source_snapshots_api_v1_source_snapshots_get
+  method: GET
+  path: /api/v1/source-snapshots
+- operationId: agent_challenge_api_v1_agents_challenge_post
+  method: POST
+  path: /api/v1/agents/challenge
+- operationId: agent_registration_api_v1_agents_register_post
+  method: POST
+  path: /api/v1/agents/register
+- operationId: agent_identity_api_v1_agents_me_get
+  method: GET
+  path: /api/v1/agents/me
+- operationId: verified_experience_api_v1_experiences__experience_id__get
+  method: GET
+  path: /api/v1/experiences/{experience_id}
+coverage:
+  tools_named: 25
+  tools_bound: 25
+  mcp_only: 0
+  rest_operations_total: 37
+  rest_operations_with_tool: 26
+  rest_only: 11
