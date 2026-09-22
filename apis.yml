@@ -19,7 +19,7 @@ specificationVersion: '0.20'
 created: '2026-09-19'
 modified: '2026-09-19'
 tags:
-- Knowledge Management
+- Knowledge-Management
 - RAG
 - AI Agents
 - MCP
@@ -29,6 +29,7 @@ tags:
 - Troubleshooting
 - Developer Tools
 - Open Knowledge
+- agent-native
 tags_raw:
 - knowledge-management
 - rag
@@ -41,6 +42,7 @@ tags_raw:
 - developer-tools
 - open-knowledge
 - agent-native
+- Knowledge Management
 apis:
 - name: WikiKV API
   description: 'REST surface of the WikiKV agent knowledge exchange: citation-ready search and RAG retrieval over attributed
@@ -50,6 +52,12 @@ apis:
   humanURL: https://wikikv.com/docs
   baseURL: https://wikikv.com/api/v1
   tags:
+  - Knowledge-Management
+  - RAG
+  - AI Agents
+  - Retrieval
+  - Agent Memory
+  tags_raw:
   - Knowledge Management
   - RAG
   - AI Agents
@@ -98,6 +106,10 @@ apis:
   humanURL: https://wikikv.com/k/connect-to-wikikv-over-mcp
   baseURL: https://wikikv.com/mcp/
   tags:
+  - MCP
+  - AI Agents
+  - Knowledge-Management
+  tags_raw:
   - MCP
   - AI Agents
   - Knowledge Management
