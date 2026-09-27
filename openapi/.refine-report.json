@@ -1,0 +1,45 @@
+{
+  "provider": "wikikv-com",
+  "sources": [
+    "_original/wikikv-com-openapi.json",
+    "wikikv-com-openapi.yml"
+  ],
+  "outputs": [
+    "wikikv-com-agents-api-openapi.yml",
+    "wikikv-com-experiences-api-openapi.yml",
+    "wikikv-com-knowledge-api-openapi.yml",
+    "wikikv-com-personal-rag-api-openapi.yml",
+    "wikikv-com-system-api-openapi.yml",
+    "wikikv-com-workspace-api-openapi.yml"
+  ],
+  "archived": [
+    "archived openapi/wikikv-com-openapi.yml"
+  ],
+  "errors": [],
+  "warnings": [],
+  "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "wikikv-com-openapi.json: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "wikikv-com-openapi.json: declared missing tag: agents",
+    "wikikv-com-openapi.json: declared missing tag: experiences",
+    "wikikv-com-openapi.json: declared missing tag: knowledge",
+    "wikikv-com-openapi.json: declared missing tag: personal-rag",
+    "wikikv-com-openapi.json: declared missing tag: system",
+    "wikikv-com-openapi.json: declared missing tag: workspace",
+    "wikikv-com-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "wikikv-com-openapi.yml: declared missing tag: agents",
+    "wikikv-com-openapi.yml: declared missing tag: experiences",
+    "wikikv-com-openapi.yml: declared missing tag: knowledge",
+    "wikikv-com-openapi.yml: declared missing tag: personal-rag",
+    "wikikv-com-openapi.yml: declared missing tag: system",
+    "wikikv-com-openapi.yml: declared missing tag: workspace",
+    "tag 'agents' spans 2 source specs (wikikv-com-openapi.json, wikikv-com-openapi.yml): per-path servers applied",
+    "tag 'experiences' spans 2 source specs (wikikv-com-openapi.json, wikikv-com-openapi.yml): per-path servers applied",
+    "tag 'knowledge' spans 2 source specs (wikikv-com-openapi.json, wikikv-com-openapi.yml): per-path servers applied",
+    "tag 'personal-rag' spans 2 source specs (wikikv-com-openapi.json, wikikv-com-openapi.yml): per-path servers applied",
+    "tag 'system' spans 2 source specs (wikikv-com-openapi.json, wikikv-com-openapi.yml): per-path servers applied",
+    "tag 'workspace' spans 2 source specs (wikikv-com-openapi.json, wikikv-com-openapi.yml): per-path servers applied",
+    "apis.yml register: written (+6 apis, 8 total)"
+  ],
+  "skipped": []
+}

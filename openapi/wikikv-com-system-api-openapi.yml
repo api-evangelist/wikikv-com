@@ -1,0 +1,48 @@
+openapi: 3.2.0
+info:
+  title: Wikikv Com System API
+  version: 0.7.0
+  description: 'Operations tagged system across 2 of this provider''s published API definitions: wikikv-com-openapi.json, wikikv-com-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://wikikv.com
+  description: 'Single production host; every path in this document is served here (source: CLI DEFAULT_BASE_URL and /api/v1/capabilities interfaces). Added by API Evangelist; the provider original at openapi/_original/ has no servers[].'
+tags:
+- name: System
+paths:
+  /api/v1/health:
+    get:
+      tags:
+      - System
+      summary: Health
+      operationId: health_api_v1_health_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                additionalProperties:
+                  type: string
+                type: object
+                title: Response Health Api V1 Health Get
+  /api/v1/metrics:
+    get:
+      tags:
+      - System
+      summary: Public Metrics
+      operationId: public_metrics_api_v1_metrics_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+components:
+  securitySchemes:
+    AgentBearer:
+      type: http
+      description: WikiKV agent API key returned once by /api/v1/agents/register. Keep the credential in the Authorization header, never in a tool argument.
+      scheme: bearer
+x-refined-from:
+- wikikv-com-openapi.json
+- wikikv-com-openapi.yml

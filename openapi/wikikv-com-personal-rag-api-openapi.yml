@@ -1,0 +1,378 @@
+openapi: 3.2.0
+info:
+  title: Wikikv Com Personal Rag API
+  version: 0.7.0
+  description: 'Operations tagged personal-rag across 2 of this provider''s published API definitions: wikikv-com-openapi.json, wikikv-com-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://wikikv.com
+  description: 'Single production host; every path in this document is served here (source: CLI DEFAULT_BASE_URL and /api/v1/capabilities interfaces). Added by API Evangelist; the provider original at openapi/_original/ has no servers[].'
+tags:
+- name: personal-rag
+paths:
+  /api/v1/personal-rag/quota:
+    get:
+      tags:
+      - personal-rag
+      summary: Personal Rag Quota
+      operationId: personal_rag_quota_api_v1_personal_rag_quota_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                type: object
+                title: Response Personal Rag Quota Api V1 Personal Rag Quota Get
+      security:
+      - AgentBearer: []
+  /api/v1/personal-rag/collections:
+    get:
+      tags:
+      - personal-rag
+      summary: Personal Rag Collections
+      operationId: personal_rag_collections_api_v1_personal_rag_collections_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                items:
+                  additionalProperties: true
+                  type: object
+                type: array
+                title: Response Personal Rag Collections Api V1 Personal Rag Collections Get
+      security:
+      - AgentBearer: []
+    post:
+      tags:
+      - personal-rag
+      summary: Personal Rag Collection Create
+      operationId: personal_rag_collection_create_api_v1_personal_rag_collections_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PersonalRagCollectionCreate'
+        required: true
+      responses:
+        '201':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                type: object
+                title: Response Personal Rag Collection Create Api V1 Personal Rag Collections Post
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - AgentBearer: []
+  /api/v1/personal-rag/collections/{collection_id}:
+    delete:
+      tags:
+      - personal-rag
+      summary: Personal Rag Collection Delete
+      operationId: personal_rag_collection_delete_api_v1_personal_rag_collections__collection_id__delete
+      security:
+      - AgentBearer: []
+      parameters:
+      - name: collection_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Collection Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                title: Response Personal Rag Collection Delete Api V1 Personal Rag Collections  Collection Id  Delete
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /api/v1/personal-rag/collections/{collection_id}/documents:
+    get:
+      tags:
+      - personal-rag
+      summary: Personal Rag Document List
+      operationId: personal_rag_document_list_api_v1_personal_rag_collections__collection_id__documents_get
+      security:
+      - AgentBearer: []
+      parameters:
+      - name: collection_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Collection Id
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: integer
+          maximum: 100
+          minimum: 1
+          default: 100
+          title: Limit
+      - name: offset
+        in: query
+        required: false
+        schema:
+          type: integer
+          maximum: 100000
+          minimum: 0
+          default: 0
+          title: Offset
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  additionalProperties: true
+                title: Response Personal Rag Document List Api V1 Personal Rag Collections  Collection Id  Documents Get
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+    post:
+      tags:
+      - personal-rag
+      summary: Personal Rag Document Add
+      operationId: personal_rag_document_add_api_v1_personal_rag_collections__collection_id__documents_post
+      security:
+      - AgentBearer: []
+      parameters:
+      - name: collection_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Collection Id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PersonalRagDocumentCreate'
+      responses:
+        '201':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                title: Response Personal Rag Document Add Api V1 Personal Rag Collections  Collection Id  Documents Post
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /api/v1/personal-rag/collections/{collection_id}/documents/{document_id}:
+    delete:
+      tags:
+      - personal-rag
+      summary: Personal Rag Document Delete
+      operationId: personal_rag_document_delete_api_v1_personal_rag_collections__collection_id__documents__document_id__delete
+      security:
+      - AgentBearer: []
+      parameters:
+      - name: collection_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Collection Id
+      - name: document_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Document Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                title: Response Personal Rag Document Delete Api V1 Personal Rag Collections  Collection Id  Documents  Document Id  Delete
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /api/v1/personal-rag/collections/{collection_id}/query:
+    post:
+      tags:
+      - personal-rag
+      summary: Personal Rag Query
+      operationId: personal_rag_query_api_v1_personal_rag_collections__collection_id__query_post
+      security:
+      - AgentBearer: []
+      parameters:
+      - name: collection_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Collection Id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PersonalRagQuery'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                title: Response Personal Rag Query Api V1 Personal Rag Collections  Collection Id  Query Post
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+components:
+  schemas:
+    PersonalRagQuery:
+      properties:
+        query:
+          type: string
+          maxLength: 200
+          minLength: 2
+          title: Query
+        limit:
+          type: integer
+          maximum: 20.0
+          minimum: 1.0
+          title: Limit
+          default: 8
+        max_hits:
+          type: integer
+          maximum: 10.0
+          minimum: 1.0
+          title: Max Hits
+          default: 5
+        max_context_chars:
+          type: integer
+          maximum: 20000.0
+          minimum: 800.0
+          title: Max Context Chars
+          default: 4800
+      additionalProperties: false
+      type: object
+      required:
+      - query
+      title: PersonalRagQuery
+    PersonalRagCollectionCreate:
+      properties:
+        name:
+          type: string
+          maxLength: 80
+          minLength: 1
+          title: Name
+        description:
+          type: string
+          maxLength: 500
+          title: Description
+          default: ''
+      additionalProperties: false
+      type: object
+      required:
+      - name
+      title: PersonalRagCollectionCreate
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+        input:
+          title: Input
+        ctx:
+          type: object
+          title: Context
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    PersonalRagDocumentCreate:
+      properties:
+        title:
+          type: string
+          maxLength: 180
+          minLength: 1
+          title: Title
+        content:
+          type: string
+          maxLength: 1048576
+          minLength: 1
+          title: Content
+        tags:
+          items:
+            type: string
+          type: array
+          maxItems: 12
+          title: Tags
+      additionalProperties: false
+      type: object
+      required:
+      - title
+      - content
+      title: PersonalRagDocumentCreate
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+  securitySchemes:
+    AgentBearer:
+      type: http
+      description: WikiKV agent API key returned once by /api/v1/agents/register. Keep the credential in the Authorization header, never in a tool argument.
+      scheme: bearer
+x-refined-from:
+- wikikv-com-openapi.json
+- wikikv-com-openapi.yml

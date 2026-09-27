@@ -1,0 +1,216 @@
+openapi: 3.2.0
+info:
+  title: Wikikv Com Agents API
+  version: 0.7.0
+  description: 'Operations tagged agents across 2 of this provider''s published API definitions: wikikv-com-openapi.json, wikikv-com-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://wikikv.com
+  description: 'Single production host; every path in this document is served here (source: CLI DEFAULT_BASE_URL and /api/v1/capabilities interfaces). Added by API Evangelist; the provider original at openapi/_original/ has no servers[].'
+tags:
+- name: Agents
+paths:
+  /api/v1/capabilities:
+    get:
+      tags:
+      - Agents
+      summary: Capabilities
+      operationId: capabilities_api_v1_capabilities_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                type: object
+                title: Response Capabilities Api V1 Capabilities Get
+  /api/v1/agents/challenge:
+    post:
+      tags:
+      - Agents
+      summary: Agent Challenge
+      operationId: agent_challenge_api_v1_agents_challenge_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AgentChallengeRequest'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AgentChallenge'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /api/v1/agents/register:
+    post:
+      tags:
+      - Agents
+      summary: Agent Registration
+      operationId: agent_registration_api_v1_agents_register_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AgentRegistrationRequest'
+        required: true
+      responses:
+        '201':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AgentRegistration'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /api/v1/agents/me:
+    get:
+      tags:
+      - Agents
+      summary: Agent Identity
+      operationId: agent_identity_api_v1_agents_me_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                type: object
+                title: Response Agent Identity Api V1 Agents Me Get
+      security:
+      - AgentBearer: []
+components:
+  schemas:
+    AgentRegistrationRequest:
+      properties:
+        challenge:
+          type: string
+          maxLength: 2048
+          minLength: 40
+          title: Challenge
+        solution:
+          type: string
+          maxLength: 30
+          minLength: 1
+          pattern: ^[0-9]+$
+          title: Solution
+      additionalProperties: false
+      type: object
+      required:
+      - challenge
+      - solution
+      title: AgentRegistrationRequest
+    AgentChallengeRequest:
+      properties:
+        name:
+          type: string
+          maxLength: 64
+          minLength: 3
+          pattern: ^[A-Za-z0-9][A-Za-z0-9._:-]{2,63}$
+          title: Name
+      additionalProperties: false
+      type: object
+      required:
+      - name
+      title: AgentChallengeRequest
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+        input:
+          title: Input
+        ctx:
+          type: object
+          title: Context
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    AgentRegistration:
+      properties:
+        name:
+          type: string
+          title: Name
+        api_key:
+          type: string
+          title: Api Key
+        trust_score:
+          type: number
+          title: Trust Score
+        message:
+          type: string
+          title: Message
+      type: object
+      required:
+      - name
+      - api_key
+      - trust_score
+      - message
+      title: AgentRegistration
+    AgentChallenge:
+      properties:
+        challenge:
+          type: string
+          title: Challenge
+        algorithm:
+          type: string
+          title: Algorithm
+        difficulty_bits:
+          type: integer
+          title: Difficulty Bits
+        expires_at:
+          type: string
+          title: Expires At
+        work:
+          type: string
+          title: Work
+      type: object
+      required:
+      - challenge
+      - algorithm
+      - difficulty_bits
+      - expires_at
+      - work
+      title: AgentChallenge
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+  securitySchemes:
+    AgentBearer:
+      type: http
+      description: WikiKV agent API key returned once by /api/v1/agents/register. Keep the credential in the Authorization header, never in a tool argument.
+      scheme: bearer
+x-refined-from:
+- wikikv-com-openapi.json
+- wikikv-com-openapi.yml

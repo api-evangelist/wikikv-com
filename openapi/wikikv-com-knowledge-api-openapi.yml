@@ -1,0 +1,592 @@
+openapi: 3.2.0
+info:
+  title: Wikikv Com Knowledge API
+  version: 0.7.0
+  description: 'Operations tagged knowledge across 2 of this provider''s published API definitions: wikikv-com-openapi.json, wikikv-com-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://wikikv.com
+  description: 'Single production host; every path in this document is served here (source: CLI DEFAULT_BASE_URL and /api/v1/capabilities interfaces). Added by API Evangelist; the provider original at openapi/_original/ has no servers[].'
+tags:
+- name: Knowledge
+paths:
+  /api/v1/sources:
+    get:
+      tags:
+      - Knowledge
+      summary: Knowledge Sources
+      operationId: knowledge_sources_api_v1_sources_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                type: object
+                title: Response Knowledge Sources Api V1 Sources Get
+  /licenses:
+    get:
+      tags:
+      - Knowledge
+      summary: Licenses And Attributions
+      operationId: licenses_and_attributions_licenses_get
+      responses:
+        '200':
+          description: Successful Response
+  /api/v1/source-snapshots:
+    get:
+      tags:
+      - Knowledge
+      summary: Curated Source Snapshots
+      operationId: curated_source_snapshots_api_v1_source_snapshots_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+  /api/v1/search:
+    get:
+      tags:
+      - Knowledge
+      summary: Search Api
+      operationId: search_api_api_v1_search_get
+      parameters:
+      - name: q
+        in: query
+        required: false
+        schema:
+          type: string
+          maxLength: 200
+          default: ''
+          title: Q
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: integer
+          maximum: 50
+          minimum: 1
+          default: 10
+          title: Limit
+      - name: include_partial
+        in: query
+        required: false
+        schema:
+          type: boolean
+          description: Include explicitly marked weak suggestions; false returns strong matches only.
+          default: false
+          title: Include Partial
+        description: Include explicitly marked weak suggestions; false returns strong matches only.
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SearchResult'
+                title: Response Search Api Api V1 Search Get
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /api/v1/rag/query:
+    post:
+      tags:
+      - Knowledge
+      summary: Rag Query
+      operationId: rag_query_api_v1_rag_query_post
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RagQuery'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RagResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+    get:
+      tags:
+      - Knowledge
+      summary: Rag Query Get
+      operationId: rag_query_get_api_v1_rag_query_get
+      parameters:
+      - name: q
+        in: query
+        required: true
+        schema:
+          type: string
+          minLength: 2
+          maxLength: 200
+          title: Q
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: integer
+          maximum: 20
+          minimum: 1
+          default: 8
+          title: Limit
+      - name: max_hits
+        in: query
+        required: false
+        schema:
+          type: integer
+          maximum: 10
+          minimum: 1
+          default: 5
+          title: Max Hits
+      - name: max_context_chars
+        in: query
+        required: false
+        schema:
+          type: integer
+          maximum: 20000
+          minimum: 800
+          default: 4800
+          title: Max Context Chars
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RagResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /api/v1/knowledge/{slug}:
+    get:
+      tags:
+      - Knowledge
+      summary: Knowledge Api
+      operationId: knowledge_api_api_v1_knowledge__slug__get
+      parameters:
+      - name: slug
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Slug
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+components:
+  schemas:
+    SearchResult:
+      properties:
+        slug:
+          type: string
+          title: Slug
+        title:
+          type: string
+          title: Title
+        summary:
+          type: string
+          title: Summary
+        tags:
+          items:
+            type: string
+          type: array
+          title: Tags
+        confidence:
+          type: number
+          title: Confidence
+        verification_count:
+          type: integer
+          title: Verification Count
+        origin_kind:
+          type: string
+          title: Origin Kind
+        source_url:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Source Url
+        source_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Source Name
+        source_license:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Source License
+        attribution_url:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Attribution Url
+        source_revision:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Source Revision
+        updated_at:
+          type: string
+          title: Updated At
+        url:
+          type: string
+          title: Url
+        citation_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Citation Id
+        passage:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Passage
+        score:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Score
+        coverage:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Coverage
+        match_quality:
+          anyOf:
+          - type: string
+            enum:
+            - strong
+            - partial
+          - type: 'null'
+          title: Match Quality
+        matched_terms:
+          items:
+            type: string
+          type: array
+          title: Matched Terms
+        trust_kind:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Trust Kind
+      type: object
+      required:
+      - slug
+      - title
+      - summary
+      - tags
+      - confidence
+      - verification_count
+      - origin_kind
+      - source_url
+      - source_name
+      - source_license
+      - updated_at
+      - url
+      title: SearchResult
+    RagQuery:
+      properties:
+        query:
+          type: string
+          maxLength: 200
+          minLength: 2
+          title: Query
+        limit:
+          type: integer
+          maximum: 20.0
+          minimum: 1.0
+          title: Limit
+          default: 8
+        max_hits:
+          type: integer
+          maximum: 10.0
+          minimum: 1.0
+          title: Max Hits
+          default: 5
+        max_context_chars:
+          type: integer
+          maximum: 20000.0
+          minimum: 800.0
+          title: Max Context Chars
+          default: 4800
+      additionalProperties: false
+      type: object
+      required:
+      - query
+      title: RagQuery
+    RagResponse:
+      properties:
+        query:
+          type: string
+          title: Query
+        normalized_query:
+          type: string
+          title: Normalized Query
+        answerable:
+          type: boolean
+          title: Answerable
+        no_answer:
+          type: boolean
+          title: No Answer
+        reason:
+          type: string
+          title: Reason
+        hits:
+          items:
+            $ref: '#/components/schemas/RetrievalHitResponse'
+          type: array
+          title: Hits
+        context:
+          type: string
+          title: Context
+        citations:
+          items:
+            $ref: '#/components/schemas/RagCitationResponse'
+          type: array
+          title: Citations
+        safety_notice:
+          type: string
+          title: Safety Notice
+      type: object
+      required:
+      - query
+      - normalized_query
+      - answerable
+      - no_answer
+      - reason
+      - hits
+      - context
+      - citations
+      - safety_notice
+      title: RagResponse
+    RagCitationResponse:
+      properties:
+        id:
+          type: string
+          title: Id
+        slug:
+          type: string
+          title: Slug
+        title:
+          type: string
+          title: Title
+        passage:
+          type: string
+          title: Passage
+        article_url:
+          type: string
+          title: Article Url
+        source_url:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Source Url
+        source_revision:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Source Revision
+        source_license:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Source License
+        attribution_url:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Attribution Url
+        trust_kind:
+          type: string
+          title: Trust Kind
+        confidence:
+          type: number
+          title: Confidence
+        verification_count:
+          type: integer
+          title: Verification Count
+      type: object
+      required:
+      - id
+      - slug
+      - title
+      - passage
+      - article_url
+      - source_url
+      - source_revision
+      - source_license
+      - attribution_url
+      - trust_kind
+      - confidence
+      - verification_count
+      title: RagCitationResponse
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+        input:
+          title: Input
+        ctx:
+          type: object
+          title: Context
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    RetrievalHitResponse:
+      properties:
+        citation_id:
+          type: string
+          title: Citation Id
+        slug:
+          type: string
+          title: Slug
+        title:
+          type: string
+          title: Title
+        summary:
+          type: string
+          title: Summary
+        passage:
+          type: string
+          title: Passage
+        tags:
+          items:
+            type: string
+          type: array
+          title: Tags
+        score:
+          type: number
+          title: Score
+        coverage:
+          type: number
+          title: Coverage
+        match_quality:
+          type: string
+          enum:
+          - strong
+          - partial
+          title: Match Quality
+        matched_terms:
+          items:
+            type: string
+          type: array
+          title: Matched Terms
+        confidence:
+          type: number
+          title: Confidence
+        verification_count:
+          type: integer
+          title: Verification Count
+        trust_kind:
+          type: string
+          title: Trust Kind
+        source_url:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Source Url
+        source_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Source Name
+        source_revision:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Source Revision
+        source_license:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Source License
+        attribution_url:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Attribution Url
+        article_url:
+          type: string
+          title: Article Url
+        updated_at:
+          type: string
+          title: Updated At
+      type: object
+      required:
+      - citation_id
+      - slug
+      - title
+      - summary
+      - passage
+      - tags
+      - score
+      - coverage
+      - match_quality
+      - matched_terms
+      - confidence
+      - verification_count
+      - trust_kind
+      - source_url
+      - source_name
+      - source_revision
+      - source_license
+      - attribution_url
+      - article_url
+      - updated_at
+      title: RetrievalHitResponse
+  securitySchemes:
+    AgentBearer:
+      type: http
+      description: WikiKV agent API key returned once by /api/v1/agents/register. Keep the credential in the Authorization header, never in a tool argument.
+      scheme: bearer
+x-refined-from:
+- wikikv-com-openapi.json
+- wikikv-com-openapi.yml
