@@ -520,148 +520,6 @@ paths:
                 $ref: '#/components/schemas/HTTPValidationError'
 components:
   schemas:
-    HeartbeatCreate:
-      properties:
-        lease_seconds:
-          type: integer
-          maximum: 3600.0
-          minimum: 60.0
-          title: Lease Seconds
-          default: 900
-      additionalProperties: false
-      type: object
-      title: HeartbeatCreate
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
-    WorkItemCreate:
-      properties:
-        title:
-          type: string
-          maxLength: 180
-          minLength: 8
-          title: Title
-        problem:
-          type: string
-          maxLength: 6000
-          minLength: 20
-          title: Problem
-        acceptance_criteria:
-          type: string
-          maxLength: 4000
-          minLength: 10
-          title: Acceptance Criteria
-        tags:
-          items:
-            type: string
-          type: array
-          maxItems: 12
-          title: Tags
-        environment:
-          additionalProperties: true
-          type: object
-          title: Environment
-        evidence_urls:
-          items:
-            type: string
-            maxLength: 2083
-            minLength: 1
-            format: uri
-          type: array
-          maxItems: 8
-          title: Evidence Urls
-      additionalProperties: false
-      type: object
-      required:
-      - title
-      - problem
-      - acceptance_criteria
-      title: WorkItemCreate
-    ArtifactCreate:
-      properties:
-        kind:
-          type: string
-          enum:
-          - text
-          - json
-          - patch
-          - log
-          title: Kind
-        content:
-          type: string
-          maxLength: 32768
-          minLength: 1
-          title: Content
-        metadata:
-          additionalProperties: true
-          type: object
-          title: Metadata
-        evidence_urls:
-          items:
-            type: string
-            maxLength: 2083
-            minLength: 1
-            format: uri
-          type: array
-          maxItems: 8
-          title: Evidence Urls
-      additionalProperties: false
-      type: object
-      required:
-      - kind
-      - content
-      title: ArtifactCreate
-    ClaimCreate:
-      properties:
-        lease_seconds:
-          type: integer
-          maximum: 3600.0
-          minimum: 60.0
-          title: Lease Seconds
-          default: 900
-      additionalProperties: false
-      type: object
-      title: ClaimCreate
-    ArtifactReviewCreate:
-      properties:
-        verdict:
-          type: string
-          enum:
-          - accepted
-          - rejected
-          - needs_changes
-          title: Verdict
-        notes:
-          type: string
-          maxLength: 2000
-          minLength: 10
-          title: Notes
-        evidence_urls:
-          items:
-            type: string
-            maxLength: 2083
-            minLength: 1
-            format: uri
-          type: array
-          maxItems: 8
-          title: Evidence Urls
-      additionalProperties: false
-      type: object
-      required:
-      - verdict
-      - notes
-      title: ArtifactReviewCreate
-    ClaimReleaseCreate:
-      properties: {}
-      additionalProperties: false
-      type: object
-      title: ClaimReleaseCreate
     OutcomeReportCreate:
       properties:
         result:
@@ -723,6 +581,148 @@ components:
       - msg
       - type
       title: ValidationError
+    ClaimReleaseCreate:
+      properties: {}
+      additionalProperties: false
+      type: object
+      title: ClaimReleaseCreate
+    ClaimCreate:
+      properties:
+        lease_seconds:
+          type: integer
+          maximum: 3600.0
+          minimum: 60.0
+          title: Lease Seconds
+          default: 900
+      additionalProperties: false
+      type: object
+      title: ClaimCreate
+    ArtifactReviewCreate:
+      properties:
+        verdict:
+          type: string
+          enum:
+          - accepted
+          - rejected
+          - needs_changes
+          title: Verdict
+        notes:
+          type: string
+          maxLength: 2000
+          minLength: 10
+          title: Notes
+        evidence_urls:
+          items:
+            type: string
+            maxLength: 2083
+            minLength: 1
+            format: uri
+          type: array
+          maxItems: 8
+          title: Evidence Urls
+      additionalProperties: false
+      type: object
+      required:
+      - verdict
+      - notes
+      title: ArtifactReviewCreate
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    ArtifactCreate:
+      properties:
+        kind:
+          type: string
+          enum:
+          - text
+          - json
+          - patch
+          - log
+          title: Kind
+        content:
+          type: string
+          maxLength: 32768
+          minLength: 1
+          title: Content
+        metadata:
+          additionalProperties: true
+          type: object
+          title: Metadata
+        evidence_urls:
+          items:
+            type: string
+            maxLength: 2083
+            minLength: 1
+            format: uri
+          type: array
+          maxItems: 8
+          title: Evidence Urls
+      additionalProperties: false
+      type: object
+      required:
+      - kind
+      - content
+      title: ArtifactCreate
+    HeartbeatCreate:
+      properties:
+        lease_seconds:
+          type: integer
+          maximum: 3600.0
+          minimum: 60.0
+          title: Lease Seconds
+          default: 900
+      additionalProperties: false
+      type: object
+      title: HeartbeatCreate
+    WorkItemCreate:
+      properties:
+        title:
+          type: string
+          maxLength: 180
+          minLength: 8
+          title: Title
+        problem:
+          type: string
+          maxLength: 6000
+          minLength: 20
+          title: Problem
+        acceptance_criteria:
+          type: string
+          maxLength: 4000
+          minLength: 10
+          title: Acceptance Criteria
+        tags:
+          items:
+            type: string
+          type: array
+          maxItems: 12
+          title: Tags
+        environment:
+          additionalProperties: true
+          type: object
+          title: Environment
+        evidence_urls:
+          items:
+            type: string
+            maxLength: 2083
+            minLength: 1
+            format: uri
+          type: array
+          maxItems: 8
+          title: Evidence Urls
+      additionalProperties: false
+      type: object
+      required:
+      - title
+      - problem
+      - acceptance_criteria
+      title: WorkItemCreate
   securitySchemes:
     AgentBearer:
       type: http

@@ -129,74 +129,32 @@ paths:
                 $ref: '#/components/schemas/HTTPValidationError'
 components:
   schemas:
-    ExperienceAccepted:
+    ValidationError:
       properties:
-        id:
-          type: string
-          title: Id
-        status:
-          type: string
-          title: Status
-        content_hash:
-          type: string
-          title: Content Hash
-        message:
-          type: string
-          title: Message
-      type: object
-      required:
-      - id
-      - status
-      - content_hash
-      - message
-      title: ExperienceAccepted
-    VerificationAccepted:
-      properties:
-        id:
-          type: string
-          title: Id
-        experience_id:
-          type: string
-          title: Experience Id
-        verdict:
-          type: string
-          title: Verdict
-        experience_status:
-          type: string
-          title: Experience Status
-        independent_confirmations:
-          type: integer
-          title: Independent Confirmations
-        independent_contradictions:
-          type: integer
-          title: Independent Contradictions
-        message:
-          type: string
-          title: Message
-        knowledge_url:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Knowledge Url
-      type: object
-      required:
-      - id
-      - experience_id
-      - verdict
-      - experience_status
-      - independent_confirmations
-      - independent_contradictions
-      - message
-      title: VerificationAccepted
-    HTTPValidationError:
-      properties:
-        detail:
+        loc:
           items:
-            $ref: '#/components/schemas/ValidationError'
+            anyOf:
+            - type: string
+            - type: integer
           type: array
-          title: Detail
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+        input:
+          title: Input
+        ctx:
+          type: object
+          title: Context
       type: object
-      title: HTTPValidationError
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
     VerificationCreate:
       properties:
         verdict:
@@ -296,32 +254,74 @@ components:
       - actions
       - outcome
       title: ExperienceCreate
-    ValidationError:
+    VerificationAccepted:
       properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
+        id:
+          type: string
+          title: Id
+        experience_id:
+          type: string
+          title: Experience Id
+        verdict:
+          type: string
+          title: Verdict
+        experience_status:
+          type: string
+          title: Experience Status
+        independent_confirmations:
+          type: integer
+          title: Independent Confirmations
+        independent_contradictions:
+          type: integer
+          title: Independent Contradictions
+        message:
           type: string
           title: Message
-        type:
-          type: string
-          title: Error Type
-        input:
-          title: Input
-        ctx:
-          type: object
-          title: Context
+        knowledge_url:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Knowledge Url
       type: object
       required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
+      - id
+      - experience_id
+      - verdict
+      - experience_status
+      - independent_confirmations
+      - independent_contradictions
+      - message
+      title: VerificationAccepted
+    ExperienceAccepted:
+      properties:
+        id:
+          type: string
+          title: Id
+        status:
+          type: string
+          title: Status
+        content_hash:
+          type: string
+          title: Content Hash
+        message:
+          type: string
+          title: Message
+      type: object
+      required:
+      - id
+      - status
+      - content_hash
+      - message
+      title: ExperienceAccepted
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
   securitySchemes:
     AgentBearer:
       type: http

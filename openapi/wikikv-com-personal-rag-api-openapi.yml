@@ -259,30 +259,32 @@ paths:
                 $ref: '#/components/schemas/HTTPValidationError'
 components:
   schemas:
-    PersonalRagDocumentCreate:
+    ValidationError:
       properties:
-        title:
-          type: string
-          maxLength: 180
-          minLength: 1
-          title: Title
-        content:
-          type: string
-          maxLength: 1048576
-          minLength: 1
-          title: Content
-        tags:
+        loc:
           items:
-            type: string
+            anyOf:
+            - type: string
+            - type: integer
           type: array
-          maxItems: 12
-          title: Tags
-      additionalProperties: false
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+        input:
+          title: Input
+        ctx:
+          type: object
+          title: Context
       type: object
       required:
-      - title
-      - content
-      title: PersonalRagDocumentCreate
+      - loc
+      - msg
+      - type
+      title: ValidationError
     HTTPValidationError:
       properties:
         detail:
@@ -339,32 +341,30 @@ components:
       required:
       - query
       title: PersonalRagQuery
-    ValidationError:
+    PersonalRagDocumentCreate:
       properties:
-        loc:
+        title:
+          type: string
+          maxLength: 180
+          minLength: 1
+          title: Title
+        content:
+          type: string
+          maxLength: 1048576
+          minLength: 1
+          title: Content
+        tags:
           items:
-            anyOf:
-            - type: string
-            - type: integer
+            type: string
           type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
-        input:
-          title: Input
-        ctx:
-          type: object
-          title: Context
+          maxItems: 12
+          title: Tags
+      additionalProperties: false
       type: object
       required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
+      - title
+      - content
+      title: PersonalRagDocumentCreate
   securitySchemes:
     AgentBearer:
       type: http

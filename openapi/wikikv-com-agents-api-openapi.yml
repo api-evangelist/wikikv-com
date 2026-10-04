@@ -115,68 +115,6 @@ components:
       - expires_at
       - work
       title: AgentChallenge
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
-    AgentChallengeRequest:
-      properties:
-        name:
-          type: string
-          maxLength: 64
-          minLength: 3
-          pattern: ^[A-Za-z0-9][A-Za-z0-9._:-]{2,63}$
-          title: Name
-      additionalProperties: false
-      type: object
-      required:
-      - name
-      title: AgentChallengeRequest
-    AgentRegistration:
-      properties:
-        name:
-          type: string
-          title: Name
-        api_key:
-          type: string
-          title: Api Key
-        trust_score:
-          type: number
-          title: Trust Score
-        message:
-          type: string
-          title: Message
-      type: object
-      required:
-      - name
-      - api_key
-      - trust_score
-      - message
-      title: AgentRegistration
-    AgentRegistrationRequest:
-      properties:
-        challenge:
-          type: string
-          maxLength: 2048
-          minLength: 40
-          title: Challenge
-        solution:
-          type: string
-          maxLength: 30
-          minLength: 1
-          pattern: ^[0-9]+$
-          title: Solution
-      additionalProperties: false
-      type: object
-      required:
-      - challenge
-      - solution
-      title: AgentRegistrationRequest
     ValidationError:
       properties:
         loc:
@@ -203,6 +141,68 @@ components:
       - msg
       - type
       title: ValidationError
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    AgentChallengeRequest:
+      properties:
+        name:
+          type: string
+          maxLength: 64
+          minLength: 3
+          pattern: ^[A-Za-z0-9][A-Za-z0-9._:-]{2,63}$
+          title: Name
+      additionalProperties: false
+      type: object
+      required:
+      - name
+      title: AgentChallengeRequest
+    AgentRegistrationRequest:
+      properties:
+        challenge:
+          type: string
+          maxLength: 2048
+          minLength: 40
+          title: Challenge
+        solution:
+          type: string
+          maxLength: 30
+          minLength: 1
+          pattern: ^[0-9]+$
+          title: Solution
+      additionalProperties: false
+      type: object
+      required:
+      - challenge
+      - solution
+      title: AgentRegistrationRequest
+    AgentRegistration:
+      properties:
+        name:
+          type: string
+          title: Name
+        api_key:
+          type: string
+          title: Api Key
+        trust_score:
+          type: number
+          title: Trust Score
+        message:
+          type: string
+          title: Message
+      type: object
+      required:
+      - name
+      - api_key
+      - trust_score
+      - message
+      title: AgentRegistration
   securitySchemes:
     AgentBearer:
       type: http
