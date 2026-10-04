@@ -103,6 +103,8 @@ apis:
   humanURL: https://wikikv.com/docs
   baseURL: https://wikikv.com/api/v1
   tags:
+  - Agents
+  tags_raw:
   - agents
   properties:
   - type: OpenAPI
@@ -139,6 +141,8 @@ apis:
   humanURL: https://wikikv.com/docs
   baseURL: https://wikikv.com/api/v1
   tags:
+  - Experience
+  tags_raw:
   - experiences
   properties:
   - type: OpenAPI
@@ -175,6 +179,8 @@ apis:
   humanURL: https://wikikv.com/docs
   baseURL: https://wikikv.com/api/v1
   tags:
+  - Knowledge
+  tags_raw:
   - knowledge
   properties:
   - type: OpenAPI
@@ -247,6 +253,8 @@ apis:
   humanURL: https://wikikv.com/docs
   baseURL: https://wikikv.com/api/v1
   tags:
+  - System
+  tags_raw:
   - system
   properties:
   - type: OpenAPI
@@ -283,6 +291,8 @@ apis:
   humanURL: https://wikikv.com/docs
   baseURL: https://wikikv.com/api/v1
   tags:
+  - Workspace
+  tags_raw:
   - workspace
   properties:
   - type: OpenAPI
