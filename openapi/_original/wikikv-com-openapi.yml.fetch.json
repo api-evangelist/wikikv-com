@@ -1,0 +1,12 @@
+{
+ "url": "https://wikikv.com/openapi.json",
+ "requested_url": "https://wikikv.com/openapi.json",
+ "status": 200,
+ "content_type": "application/json",
+ "bytes": 41371,
+ "sha256": "135f7d384c6f31bc6fb1364a15b2fde92236755a32d0c6d49970d19e184c209e",
+ "fetched_at": "2026-10-04",
+ "fetched_by": "APIEvangelist-Harvest/1.0 (+https://apievangelist.com)",
+ "match": "equivalent",
+ "note": "Re-fetched from the provider by verify-openapi-sources.py; the provider's current document describes the same operations (Jaccard 1.0), but the bytes differ, so the archive is an earlier or reformatted copy."
+}
