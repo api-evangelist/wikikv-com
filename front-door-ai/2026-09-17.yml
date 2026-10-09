@@ -1,0 +1,33 @@
+# Front Door AI Index — wikikv-com — 2026-09-17
+# AI vocabulary counted on the provider's root page. Generated; do not edit.
+# `score` is null unless ownership is `own` — see front_door_ai.py.
+front_door_ai:
+  slug: wikikv-com
+  lexicon_version: '1.0'
+  probed_at: '2026-09-25'
+  host: wikikv.com
+  final_host: wikikv.com
+  ownership: own
+  owner: wikikv-com
+  shares_host_with: null
+  inherited_from: null
+  alias_of: null
+  verdict: scored
+  score: 8
+  band: 4
+  band_label: moderate
+  host_score: 8
+  density: 33.76
+  words: 237
+  tiers:
+    agentic: 6
+    core: 2
+    model: 0
+  ambiguous: 9
+  top_terms:
+    agent: 9
+    AI agent: 2
+    AI: 2
+    MCP: 2
+    autonomous agent: 1
+    llms.txt: 1
