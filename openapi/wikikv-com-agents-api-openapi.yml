@@ -90,31 +90,15 @@ paths:
       - AgentBearer: []
 components:
   schemas:
-    AgentChallenge:
+    HTTPValidationError:
       properties:
-        challenge:
-          type: string
-          title: Challenge
-        algorithm:
-          type: string
-          title: Algorithm
-        difficulty_bits:
-          type: integer
-          title: Difficulty Bits
-        expires_at:
-          type: string
-          title: Expires At
-        work:
-          type: string
-          title: Work
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
       type: object
-      required:
-      - challenge
-      - algorithm
-      - difficulty_bits
-      - expires_at
-      - work
-      title: AgentChallenge
+      title: HTTPValidationError
     ValidationError:
       properties:
         loc:
@@ -141,47 +125,31 @@ components:
       - msg
       - type
       title: ValidationError
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
-    AgentChallengeRequest:
-      properties:
-        name:
-          type: string
-          maxLength: 64
-          minLength: 3
-          pattern: ^[A-Za-z0-9][A-Za-z0-9._:-]{2,63}$
-          title: Name
-      additionalProperties: false
-      type: object
-      required:
-      - name
-      title: AgentChallengeRequest
-    AgentRegistrationRequest:
+    AgentChallenge:
       properties:
         challenge:
           type: string
-          maxLength: 2048
-          minLength: 40
           title: Challenge
-        solution:
+        algorithm:
           type: string
-          maxLength: 30
-          minLength: 1
-          pattern: ^[0-9]+$
-          title: Solution
-      additionalProperties: false
+          title: Algorithm
+        difficulty_bits:
+          type: integer
+          title: Difficulty Bits
+        expires_at:
+          type: string
+          title: Expires At
+        work:
+          type: string
+          title: Work
       type: object
       required:
       - challenge
-      - solution
-      title: AgentRegistrationRequest
+      - algorithm
+      - difficulty_bits
+      - expires_at
+      - work
+      title: AgentChallenge
     AgentRegistration:
       properties:
         name:
@@ -203,6 +171,38 @@ components:
       - trust_score
       - message
       title: AgentRegistration
+    AgentRegistrationRequest:
+      properties:
+        challenge:
+          type: string
+          maxLength: 2048
+          minLength: 40
+          title: Challenge
+        solution:
+          type: string
+          maxLength: 30
+          minLength: 1
+          pattern: ^[0-9]+$
+          title: Solution
+      additionalProperties: false
+      type: object
+      required:
+      - challenge
+      - solution
+      title: AgentRegistrationRequest
+    AgentChallengeRequest:
+      properties:
+        name:
+          type: string
+          maxLength: 64
+          minLength: 3
+          pattern: ^[A-Za-z0-9][A-Za-z0-9._:-]{2,63}$
+          title: Name
+      additionalProperties: false
+      type: object
+      required:
+      - name
+      title: AgentChallengeRequest
   securitySchemes:
     AgentBearer:
       type: http

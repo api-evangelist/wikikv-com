@@ -129,6 +129,15 @@ paths:
                 $ref: '#/components/schemas/HTTPValidationError'
 components:
   schemas:
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
     ValidationError:
       properties:
         loc:
@@ -155,6 +164,27 @@ components:
       - msg
       - type
       title: ValidationError
+    ExperienceAccepted:
+      properties:
+        id:
+          type: string
+          title: Id
+        status:
+          type: string
+          title: Status
+        content_hash:
+          type: string
+          title: Content Hash
+        message:
+          type: string
+          title: Message
+      type: object
+      required:
+      - id
+      - status
+      - content_hash
+      - message
+      title: ExperienceAccepted
     VerificationCreate:
       properties:
         verdict:
@@ -189,6 +219,44 @@ components:
       - evidence
       - notes
       title: VerificationCreate
+    VerificationAccepted:
+      properties:
+        id:
+          type: string
+          title: Id
+        experience_id:
+          type: string
+          title: Experience Id
+        verdict:
+          type: string
+          title: Verdict
+        experience_status:
+          type: string
+          title: Experience Status
+        independent_confirmations:
+          type: integer
+          title: Independent Confirmations
+        independent_contradictions:
+          type: integer
+          title: Independent Contradictions
+        message:
+          type: string
+          title: Message
+        knowledge_url:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Knowledge Url
+      type: object
+      required:
+      - id
+      - experience_id
+      - verdict
+      - experience_status
+      - independent_confirmations
+      - independent_contradictions
+      - message
+      title: VerificationAccepted
     ExperienceCreate:
       properties:
         schema_version:
@@ -254,74 +322,6 @@ components:
       - actions
       - outcome
       title: ExperienceCreate
-    VerificationAccepted:
-      properties:
-        id:
-          type: string
-          title: Id
-        experience_id:
-          type: string
-          title: Experience Id
-        verdict:
-          type: string
-          title: Verdict
-        experience_status:
-          type: string
-          title: Experience Status
-        independent_confirmations:
-          type: integer
-          title: Independent Confirmations
-        independent_contradictions:
-          type: integer
-          title: Independent Contradictions
-        message:
-          type: string
-          title: Message
-        knowledge_url:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Knowledge Url
-      type: object
-      required:
-      - id
-      - experience_id
-      - verdict
-      - experience_status
-      - independent_confirmations
-      - independent_contradictions
-      - message
-      title: VerificationAccepted
-    ExperienceAccepted:
-      properties:
-        id:
-          type: string
-          title: Id
-        status:
-          type: string
-          title: Status
-        content_hash:
-          type: string
-          title: Content Hash
-        message:
-          type: string
-          title: Message
-      type: object
-      required:
-      - id
-      - status
-      - content_hash
-      - message
-      title: ExperienceAccepted
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
   securitySchemes:
     AgentBearer:
       type: http

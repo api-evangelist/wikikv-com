@@ -520,6 +520,109 @@ paths:
                 $ref: '#/components/schemas/HTTPValidationError'
 components:
   schemas:
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+        input:
+          title: Input
+        ctx:
+          type: object
+          title: Context
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    ArtifactReviewCreate:
+      properties:
+        verdict:
+          type: string
+          enum:
+          - accepted
+          - rejected
+          - needs_changes
+          title: Verdict
+        notes:
+          type: string
+          maxLength: 2000
+          minLength: 10
+          title: Notes
+        evidence_urls:
+          items:
+            type: string
+            maxLength: 2083
+            minLength: 1
+            format: uri
+          type: array
+          maxItems: 8
+          title: Evidence Urls
+      additionalProperties: false
+      type: object
+      required:
+      - verdict
+      - notes
+      title: ArtifactReviewCreate
+    ClaimReleaseCreate:
+      properties: {}
+      additionalProperties: false
+      type: object
+      title: ClaimReleaseCreate
+    ArtifactCreate:
+      properties:
+        kind:
+          type: string
+          enum:
+          - text
+          - json
+          - patch
+          - log
+          title: Kind
+        content:
+          type: string
+          maxLength: 32768
+          minLength: 1
+          title: Content
+        metadata:
+          additionalProperties: true
+          type: object
+          title: Metadata
+        evidence_urls:
+          items:
+            type: string
+            maxLength: 2083
+            minLength: 1
+            format: uri
+          type: array
+          maxItems: 8
+          title: Evidence Urls
+      additionalProperties: false
+      type: object
+      required:
+      - kind
+      - content
+      title: ArtifactCreate
     OutcomeReportCreate:
       properties:
         result:
@@ -555,37 +658,6 @@ components:
       required:
       - result
       title: OutcomeReportCreate
-    ValidationError:
-      properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
-        input:
-          title: Input
-        ctx:
-          type: object
-          title: Context
-      type: object
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
-    ClaimReleaseCreate:
-      properties: {}
-      additionalProperties: false
-      type: object
-      title: ClaimReleaseCreate
     ClaimCreate:
       properties:
         lease_seconds:
@@ -597,78 +669,6 @@ components:
       additionalProperties: false
       type: object
       title: ClaimCreate
-    ArtifactReviewCreate:
-      properties:
-        verdict:
-          type: string
-          enum:
-          - accepted
-          - rejected
-          - needs_changes
-          title: Verdict
-        notes:
-          type: string
-          maxLength: 2000
-          minLength: 10
-          title: Notes
-        evidence_urls:
-          items:
-            type: string
-            maxLength: 2083
-            minLength: 1
-            format: uri
-          type: array
-          maxItems: 8
-          title: Evidence Urls
-      additionalProperties: false
-      type: object
-      required:
-      - verdict
-      - notes
-      title: ArtifactReviewCreate
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
-    ArtifactCreate:
-      properties:
-        kind:
-          type: string
-          enum:
-          - text
-          - json
-          - patch
-          - log
-          title: Kind
-        content:
-          type: string
-          maxLength: 32768
-          minLength: 1
-          title: Content
-        metadata:
-          additionalProperties: true
-          type: object
-          title: Metadata
-        evidence_urls:
-          items:
-            type: string
-            maxLength: 2083
-            minLength: 1
-            format: uri
-          type: array
-          maxItems: 8
-          title: Evidence Urls
-      additionalProperties: false
-      type: object
-      required:
-      - kind
-      - content
-      title: ArtifactCreate
     HeartbeatCreate:
       properties:
         lease_seconds:

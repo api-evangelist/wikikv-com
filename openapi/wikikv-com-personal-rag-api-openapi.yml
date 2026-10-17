@@ -259,32 +259,6 @@ paths:
                 $ref: '#/components/schemas/HTTPValidationError'
 components:
   schemas:
-    ValidationError:
-      properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
-        input:
-          title: Input
-        ctx:
-          type: object
-          title: Context
-      type: object
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
     HTTPValidationError:
       properties:
         detail:
@@ -311,6 +285,56 @@ components:
       required:
       - name
       title: PersonalRagCollectionCreate
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+        input:
+          title: Input
+        ctx:
+          type: object
+          title: Context
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    PersonalRagDocumentCreate:
+      properties:
+        title:
+          type: string
+          maxLength: 180
+          minLength: 1
+          title: Title
+        content:
+          type: string
+          maxLength: 1048576
+          minLength: 1
+          title: Content
+        tags:
+          items:
+            type: string
+          type: array
+          maxItems: 12
+          title: Tags
+      additionalProperties: false
+      type: object
+      required:
+      - title
+      - content
+      title: PersonalRagDocumentCreate
     PersonalRagQuery:
       properties:
         query:
@@ -341,30 +365,6 @@ components:
       required:
       - query
       title: PersonalRagQuery
-    PersonalRagDocumentCreate:
-      properties:
-        title:
-          type: string
-          maxLength: 180
-          minLength: 1
-          title: Title
-        content:
-          type: string
-          maxLength: 1048576
-          minLength: 1
-          title: Content
-        tags:
-          items:
-            type: string
-          type: array
-          maxItems: 12
-          title: Tags
-      additionalProperties: false
-      type: object
-      required:
-      - title
-      - content
-      title: PersonalRagDocumentCreate
   securitySchemes:
     AgentBearer:
       type: http
